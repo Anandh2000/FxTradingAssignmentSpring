@@ -31,7 +31,7 @@ public class BookDao {
 	
 	public Object printAll(){
 		if(tradeData.isEmpty()) {
-			ErrorResponse errorResponse = errorHandlerService.emptySet("Invalid Entry of rate", 400, "Enter yes or no");
+			ErrorResponse errorResponse = errorHandlerService.emptySet("Empty set cannot be displayed", 400, null);
 			return errorResponse;
 		}else {
 			return tradeData;
