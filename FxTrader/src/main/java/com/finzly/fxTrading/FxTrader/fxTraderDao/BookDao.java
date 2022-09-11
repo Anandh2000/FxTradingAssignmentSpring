@@ -26,11 +26,16 @@ public class BookDao {
 	private static LinkedHashSet<FxTradingData> tradeData = new LinkedHashSet<>();
 	private static Stack<FxTradingData> recentlyEnteredData = new Stack<>();
 	
-	 @Autowired
-	 private ErrorHandlerService errorHandlerService;
+	@Autowired
+	private ErrorHandlerService errorHandlerService;
 	
-	public LinkedHashSet<FxTradingData> printAll(){
-		return tradeData;
+	public Object printAll(){
+		if(tradeData.isEmpty()) {
+			ErrorResponse errorResponse = errorHandlerService.emptySet("Invalid Entry of rate", 400, "Enter yes or no");
+			return errorResponse;
+		}else {
+			return tradeData;
+		}
 	}
 	
 	
@@ -95,6 +100,7 @@ public class BookDao {
 			
 		}
 		else if(bookorCancel.equalsIgnoreCase("cancel")) {
+			recentlyEnteredData.pop();
 			SuccessResponse successResponse = new SuccessResponse(
 					"trade is cancelled",entity ,200);
 			return successResponse;

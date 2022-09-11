@@ -27,5 +27,10 @@ public class ErrorHandlerService {
 	        ErrorResponse errorResponse = new ErrorResponse(message,object,statusCode);
 	        return errorResponse;
 	    }
+	    public ErrorResponse emptySet(String message,int statusCode,Object object)
+	    {
+	        ErrorResponse errorResponse = new ErrorResponse(message,object,statusCode);
+	        return errorResponse;
+	    }
 
 }

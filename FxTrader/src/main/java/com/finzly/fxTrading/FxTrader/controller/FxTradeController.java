@@ -34,7 +34,7 @@ public class FxTradeController{
 	public FxTradeController() {}
 
 	@GetMapping("/menu")
-	public  EntityModel<MenuDisplayer> menu(){
+	public  EntityModel<MenuDisplayer> menuDisplayer(){
 		EntityModel<MenuDisplayer> entity = EntityModel.of(new MenuDisplayer("BookTrade", "PrintTrade", "Exit"));
 		WebMvcLinkBuilder link1 = linkTo(methodOn(this.getClass()).printTrade());
 		entity.add(link1.withRel("PrintTrade"));
@@ -49,7 +49,7 @@ public class FxTradeController{
 
 	
 	@GetMapping("/PrintTrade")
-	public LinkedHashSet<FxTradingData> printTrade(){
+	public Object printTrade(){
 		return service.printAll();
 	}
 	
@@ -87,7 +87,7 @@ public class FxTradeController{
 	@PostMapping("/bookorCancel")
 	public Object bookOrCancel(@RequestBody String bookorCancel){
 		EntityModel<FxTradeController> entity = EntityModel.of(new FxTradeController());
-		WebMvcLinkBuilder link4 = linkTo(methodOn(this.getClass()).menu());
+		WebMvcLinkBuilder link4 = linkTo(methodOn(this.getClass()).menuDisplayer());
 		entity.add(link4.withRel("Menu"));
 		Object bookOrCancel = service.bookTrade(bookorCancel,entity);
 		return bookOrCancel;
