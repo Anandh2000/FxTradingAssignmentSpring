@@ -93,7 +93,6 @@ public class FxTradeController{
 		return bookOrCancel;
 	}
 	
-	
 	@GetMapping("/bookformat")
 	public User formatOfBooking(){
 		User use = new User();

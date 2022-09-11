@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
 
+
 import com.finzly.fxTrading.FxTrader.controller.FxTradeController;
 import com.finzly.fxTrading.FxTrader.entity.FxTradingData;
 import com.finzly.fxTrading.FxTrader.entity.User;
@@ -95,7 +96,8 @@ public class BookDao {
 			FxTradingData data = recentlyEnteredData.pop();
 			tradeData.add(data);
 			SuccessResponse successResponse = new SuccessResponse(
-					"Successfully trade booked",data ,200);
+					"Trade for "+ data.getCurrencyPair() +" has been booked with "+data.getRate()+", The amount of Rs"
+				+formatedAmount(ConvertedAmount)+ " will be transferred in 2 working days to "+ data.getCustomerName(),data ,200);
 			return successResponse;
 			
 		}
