@@ -1,7 +1,6 @@
 package com.finzly.fxTrading.FxTrader.entity;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 public class User {
@@ -9,7 +8,6 @@ public class User {
 	private String customerName;
 	@Pattern(regexp = "USDINR", message = "Invalid CurrencyPair")
 	private String currencyPair;
-	@NotBlank(message = "The amount is required")
 	@Min(1)
 	private double amount;
 	private String getRateYesOrNo;
