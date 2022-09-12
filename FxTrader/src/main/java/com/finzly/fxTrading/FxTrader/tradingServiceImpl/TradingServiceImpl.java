@@ -93,7 +93,7 @@ public class TradingServiceImpl implements TradingService{
 	@Override
 	public ResponseEntity<?> setRate(double rate) {
 		TradingServiceImpl.rate = rate;
-		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", null, 200);
+		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", rate, 200);
 		return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
 	
