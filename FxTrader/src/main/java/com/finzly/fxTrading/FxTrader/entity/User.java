@@ -9,7 +9,7 @@ public class User {
 	private String customerName;
 	@Pattern(regexp = "USDINR", message = "Invalid CurrencyPair")
 	private String currencyPair;
-	@NotBlank(message = "amount is required")
+	@NotBlank(message = "The amount is required")
 	@Min(1)
 	private double amount;
 	private String getRateYesOrNo;

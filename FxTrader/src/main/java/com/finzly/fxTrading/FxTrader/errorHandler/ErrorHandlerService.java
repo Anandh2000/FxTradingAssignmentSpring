@@ -26,6 +26,7 @@ public class ErrorHandlerService {
 	        ErrorResponse errorResponse = new ErrorResponse(message,object,statusCode);
 	        return errorResponse;
 	    }
+	    
 	    @ResponseStatus(HttpStatus.BAD_REQUEST)
 	    @ExceptionHandler(MethodArgumentNotValidException.class)
 	    public HashMap<String, String> handleInvalidArgument(MethodArgumentNotValidException ex) {

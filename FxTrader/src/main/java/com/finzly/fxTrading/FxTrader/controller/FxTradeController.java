@@ -43,7 +43,6 @@ public class FxTradeController{
 		return entity;
 	}
 
-	
 	@GetMapping("/PrintTrade")
 	public Object printTrade(){
 		return service.printAll();
