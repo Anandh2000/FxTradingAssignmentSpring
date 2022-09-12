@@ -97,9 +97,9 @@ public class FxTradeController{
 	}
 	
 	@PostMapping("/RateChanger/{rate}")
-	public String changeRate(@PathVariable double rate){
-		service.setRate(rate);
-		return "Successfully rate changed";
+	public ResponseEntity<?> changeRate(@PathVariable double rate){
+		ResponseEntity<?> rateChanger =  service.setRate(rate);
+		return rateChanger;
 	}
 	
 

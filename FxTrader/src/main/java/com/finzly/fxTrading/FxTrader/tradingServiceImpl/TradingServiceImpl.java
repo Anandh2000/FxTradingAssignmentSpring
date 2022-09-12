@@ -27,6 +27,7 @@ public class TradingServiceImpl implements TradingService{
 
 	@Autowired
 	private ErrorHandlerService errorHandlerService;
+	
 	@Autowired
 	private FxTradingData trading;
 	
@@ -40,7 +41,7 @@ public class TradingServiceImpl implements TradingService{
 		}
 	}
 	
-	
+	@Override
 	public ResponseEntity<?> saveTradeBeforeBooking(User user,EntityModel<FxTradeController> entity) {
 		ConvertedAmount = user.getAmount()*rate;
 		if(user.getGetRateYesOrNo().equalsIgnoreCase("yes")) {
@@ -65,8 +66,8 @@ public class TradingServiceImpl implements TradingService{
 			}
 				
 		}
-
-
+	
+	@Override
 	public ResponseEntity<?> bookTrade(String bookorCancel, EntityModel<FxTradeController> entity) {
 		if(bookorCancel.equalsIgnoreCase("book")) {
 			FxTradingData data = recentlyEnteredData.pop();
@@ -89,8 +90,11 @@ public class TradingServiceImpl implements TradingService{
 		}
 	}
 	
-	public static void setRate(double rate) {
+	@Override
+	public ResponseEntity<?> setRate(double rate) {
 		TradingServiceImpl.rate = rate;
+		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", null, 200);
+		return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
 	
 
