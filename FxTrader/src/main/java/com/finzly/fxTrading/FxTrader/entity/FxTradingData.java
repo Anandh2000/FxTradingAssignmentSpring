@@ -1,5 +1,10 @@
 package com.finzly.fxTrading.FxTrader.entity;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import org.springframework.stereotype.Component;
+@Component
 public class FxTradingData {
 	private int tradeNumber;
 	private String customerName;
@@ -65,12 +70,10 @@ public class FxTradingData {
 				+ currencyPair + ", amount=" + amount + ", rate=" + rate + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-
+	public String formatedAmount(double amount) {
+		 NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+		 return formatter.format(amount);
+		
+	}
+		
 }

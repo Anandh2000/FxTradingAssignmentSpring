@@ -8,13 +8,15 @@ import javax.validation.Valid;
 import com.finzly.fxTrading.FxTrader.entity.MenuDisplayer;
 import com.finzly.fxTrading.FxTrader.entity.User;
 import com.finzly.fxTrading.FxTrader.errorHandler.ErrorHandlerService;
-import com.finzly.fxTrading.FxTrader.fxTraderDao.BookDao;
 import com.finzly.fxTrading.FxTrader.response.ErrorResponse;
+import com.finzly.fxTrading.FxTrader.tradingServiceImpl.TradingServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 public class FxTradeController{
 	@Autowired
-	BookDao service;
+	TradingServiceImpl service;
 	@Autowired
 	private ErrorHandlerService errorHandlerService;
 	
@@ -42,19 +44,19 @@ public class FxTradeController{
 		entity.add(link4.withRel("To know format of booking"));
 		return entity;
 	}
-
-	@GetMapping("/PrintTrade")
-	public Object printTrade(){
-		return service.printAll();
-	}
 	
 	@PostMapping("/BookTrade")
-	public Object bookTrade(@RequestBody @Valid User user){
+	public ResponseEntity<?> bookTrade(@RequestBody @Valid User user){
 		EntityModel<FxTradeController> enter = EntityModel.of(new FxTradeController());
 		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).bookOrCancel(new String()));
 		enter.add(link.withRel("BookOrCancel"));
-		Object bookingTrade = service.save(user, enter);
+		 ResponseEntity<?> bookingTrade = service.saveTradeBeforeBooking(user, enter);
 		return bookingTrade;
+	}
+	
+	@GetMapping("/PrintTrade")
+	public Object printTrade(){
+		return service.printAll();
 	}
 
 	@PostMapping("/Exit")
@@ -80,11 +82,11 @@ public class FxTradeController{
 	}
 	
 	@PostMapping("/bookorCancel")
-	public Object bookOrCancel(@RequestBody String bookorCancel){
+	public ResponseEntity<?> bookOrCancel(@RequestBody String bookorCancel){
 		EntityModel<FxTradeController> entity = EntityModel.of(new FxTradeController());
 		WebMvcLinkBuilder link4 = linkTo(methodOn(this.getClass()).displayMenuWithLinks());
 		entity.add(link4.withRel("Menu"));
-		Object bookOrCancel = service.bookTrade(bookorCancel,entity);
+		ResponseEntity<?> bookOrCancel = service.bookTrade(bookorCancel,entity);
 		return bookOrCancel;
 	}
 	
@@ -93,5 +95,13 @@ public class FxTradeController{
 		User use = new User();
 		return use;
 	}
+	
+	@PostMapping("/RateChanger/{rate}")
+	public String changeRate(@PathVariable double rate){
+		service.setRate(rate);
+		return "Successfully rate changed";
+	}
+	
+
 
 }
