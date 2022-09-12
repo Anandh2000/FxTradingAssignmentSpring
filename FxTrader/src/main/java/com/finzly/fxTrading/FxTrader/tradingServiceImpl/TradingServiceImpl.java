@@ -27,6 +27,7 @@ public class TradingServiceImpl implements TradingService{
 
 	@Autowired
 	private ErrorHandlerService errorHandlerService;
+	
 	@Autowired
 	private FxTradingData trading;
 	
