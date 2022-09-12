@@ -1,28 +1,24 @@
 package com.finzly.fxTrading.FxTrader.controller;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Links;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
-
-import com.finzly.fxTrading.FxTrader.entity.FxTradingData;
 import com.finzly.fxTrading.FxTrader.entity.MenuDisplayer;
 import com.finzly.fxTrading.FxTrader.entity.User;
 import com.finzly.fxTrading.FxTrader.errorHandler.ErrorHandlerService;
 import com.finzly.fxTrading.FxTrader.fxTraderDao.BookDao;
 import com.finzly.fxTrading.FxTrader.response.ErrorResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 public class FxTradeController{
@@ -34,7 +30,7 @@ public class FxTradeController{
 	public FxTradeController() {}
 
 	@GetMapping("/menu")
-	public  EntityModel<MenuDisplayer> menuDisplayer(){
+	public  EntityModel<MenuDisplayer> displayMenuWithLinks(){
 		EntityModel<MenuDisplayer> entity = EntityModel.of(new MenuDisplayer("BookTrade", "PrintTrade", "Exit"));
 		WebMvcLinkBuilder link1 = linkTo(methodOn(this.getClass()).printTrade());
 		entity.add(link1.withRel("PrintTrade"));
@@ -47,14 +43,13 @@ public class FxTradeController{
 		return entity;
 	}
 
-	
 	@GetMapping("/PrintTrade")
 	public Object printTrade(){
 		return service.printAll();
 	}
 	
 	@PostMapping("/BookTrade")
-	public Object bookTrade(@RequestBody User user){
+	public Object bookTrade(@RequestBody @Valid User user){
 		EntityModel<FxTradeController> enter = EntityModel.of(new FxTradeController());
 		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).bookOrCancel(new String()));
 		enter.add(link.withRel("BookOrCancel"));
@@ -87,7 +82,7 @@ public class FxTradeController{
 	@PostMapping("/bookorCancel")
 	public Object bookOrCancel(@RequestBody String bookorCancel){
 		EntityModel<FxTradeController> entity = EntityModel.of(new FxTradeController());
-		WebMvcLinkBuilder link4 = linkTo(methodOn(this.getClass()).menuDisplayer());
+		WebMvcLinkBuilder link4 = linkTo(methodOn(this.getClass()).displayMenuWithLinks());
 		entity.add(link4.withRel("Menu"));
 		Object bookOrCancel = service.bookTrade(bookorCancel,entity);
 		return bookOrCancel;

@@ -1,8 +1,16 @@
 package com.finzly.fxTrading.FxTrader.entity;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class User {
+	@Pattern(regexp = "[a-zA-Z\\s+]+[.]+",message = "Invalid User Name")
 	private String customerName;
+	@Pattern(regexp = "USDINR", message = "Invalid CurrencyPair")
 	private String currencyPair;
+	@NotBlank(message = "The amount is required")
+	@Min(1)
 	private double amount;
 	private String getRateYesOrNo;
 	public User(String customerName, String currencyPair, double amount, String getRateYesOrNo, String bookOrCancel) {
@@ -12,6 +20,9 @@ public class User {
 		this.amount = amount;
 		this.getRateYesOrNo = getRateYesOrNo;
 	}
+	public User() {	
+	}
+	
 	
 	
 	public String getCustomerName() {
@@ -45,12 +56,6 @@ public class User {
 		return "User [customerName=" + customerName + ", currencyPair=" + currencyPair + ", amount=" + amount
 				+ ", getRateYesOrNo=" + getRateYesOrNo + "]";
 	}
-
-
-	public User() {
-		
-	}
-	
 	
 	
 
