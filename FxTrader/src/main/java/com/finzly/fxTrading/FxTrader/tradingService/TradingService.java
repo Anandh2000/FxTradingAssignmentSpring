@@ -11,5 +11,6 @@ public interface TradingService {
 	public ResponseEntity<?> printAll();
 	public ResponseEntity<?> saveTradeBeforeBooking(User user,EntityModel<FxTradeController> entity);
 	public ResponseEntity<?> bookTrade(String bookorCancel, EntityModel<FxTradeController> entity);
+	public ResponseEntity<?> setRate(double rate);
 
 }
