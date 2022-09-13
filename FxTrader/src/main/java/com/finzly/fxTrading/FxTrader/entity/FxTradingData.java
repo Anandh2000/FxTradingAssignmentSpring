@@ -3,9 +3,14 @@ package com.finzly.fxTrading.FxTrader.entity;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import org.springframework.stereotype.Component;
 @Component
+@Entity
 public class FxTradingData {
+	@Id
 	private int tradeNumber;
 	private String customerName;
 	private String currencyPair;
