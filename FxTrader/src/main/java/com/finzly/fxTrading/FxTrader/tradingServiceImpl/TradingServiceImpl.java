@@ -7,6 +7,7 @@ import com.finzly.fxTrading.FxTrader.controller.FxTradeController;
 import com.finzly.fxTrading.FxTrader.entity.FxTradingData;
 import com.finzly.fxTrading.FxTrader.entity.User;
 import com.finzly.fxTrading.FxTrader.errorHandler.ErrorHandlerService;
+import com.finzly.fxTrading.FxTrader.repository.TradingRepository;
 import com.finzly.fxTrading.FxTrader.response.ErrorResponse;
 import com.finzly.fxTrading.FxTrader.response.SuccessResponse;
 import com.finzly.fxTrading.FxTrader.tradingService.TradingService;
@@ -17,13 +18,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class TradingServiceImpl implements TradingService{
-	private int tradeNo = 0;
+	private static int tradeNo = 0;
 	private static double rate = 66.00;
 	private double ConvertedAmount;
 	private static LinkedHashSet<FxTradingData> tradeData = new LinkedHashSet<>();
 	private static Stack<FxTradingData> recentlyEnteredData = new Stack<>();
+	
+	//dummy data
+	static {
+		tradeData.add(new FxTradingData(++tradeNo, "Anandh B.", "USDINR", 66000,rate ));
+		tradeData.add(new FxTradingData(++tradeNo, "Lokesh M.", "USDINR", 116000,rate ));
+		tradeData.add(new FxTradingData(++tradeNo, "Vikas M.", "USDINR", 660000,rate ));
+	}
 
 	@Autowired
 	private ErrorHandlerService errorHandlerService;
@@ -31,13 +40,17 @@ public class TradingServiceImpl implements TradingService{
 	@Autowired
 	private FxTradingData trading;
 	
+	@Autowired
+	private TradingRepository repository;
+	
 	@Override
 	public ResponseEntity<?> printAll(){
 		if(tradeData.isEmpty()) {
 			ErrorResponse errorResponse = errorHandlerService.emptySet("Empty set cannot be displayed", 400, null);
 			return new ResponseEntity<>(errorResponse, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<>(tradeData, HttpStatus.OK);
+			repository.saveAll(tradeData);
+			return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
 		}
 	}
 	
@@ -75,6 +88,7 @@ public class TradingServiceImpl implements TradingService{
 			
 		}
 		else if(bookorCancel.equalsIgnoreCase("cancel")) {
+			--tradeNo;
 			recentlyEnteredData.pop();
 			SuccessResponse successResponse = new SuccessResponse(
 					"trade is cancelled",entity ,200);
