@@ -24,15 +24,7 @@ public class TradingServiceImpl implements TradingService{
 	private static int tradeNo = 0;
 	private static double rate = 66.00;
 	private double ConvertedAmount;
-	private static LinkedHashSet<FxTradingData> tradeData = new LinkedHashSet<>();
 	private static Stack<FxTradingData> recentlyEnteredData = new Stack<>();
-	
-	//dummy data
-	static {
-		tradeData.add(new FxTradingData(++tradeNo, "Anandh B.", "USDINR", 66000,rate ));
-		tradeData.add(new FxTradingData(++tradeNo, "Lokesh M.", "USDINR", 116000,rate ));
-		tradeData.add(new FxTradingData(++tradeNo, "Vikas M.", "USDINR", 660000,rate ));
-	}
 
 	@Autowired
 	private ErrorHandlerService errorHandlerService;
@@ -45,11 +37,10 @@ public class TradingServiceImpl implements TradingService{
 	
 	@Override
 	public ResponseEntity<?> printAll(){
-		if(tradeData.isEmpty()) {
+		if(repository.findAll().isEmpty()) {
 			ErrorResponse errorResponse = errorHandlerService.emptySet("Empty set cannot be displayed", 400, null);
 			return new ResponseEntity<>(errorResponse, HttpStatus.OK);
 		}else {
-			repository.saveAll(tradeData);
 			return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
 		}
 	}
@@ -80,7 +71,7 @@ public class TradingServiceImpl implements TradingService{
 	public ResponseEntity<?> bookTrade(String bookorCancel, EntityModel<FxTradeController> entity) {
 		if(bookorCancel.equalsIgnoreCase("book")) {
 			FxTradingData data = recentlyEnteredData.pop();
-			tradeData.add(data);
+			repository.save(data);
 			SuccessResponse successResponse = new SuccessResponse(
 					"Trade for "+ data.getCurrencyPair() +" has been booked with "+data.getRate()+", The amount of Rs"
 				+trading.formatedAmount(ConvertedAmount)+ " will be transferred in 2 working days to "+ data.getCustomerName(),data ,200);
@@ -106,6 +97,7 @@ public class TradingServiceImpl implements TradingService{
 		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", null, 200);
 		return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
+
 	
 
 }
