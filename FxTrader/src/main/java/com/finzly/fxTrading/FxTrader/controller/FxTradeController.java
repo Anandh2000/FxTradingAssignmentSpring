@@ -12,6 +12,7 @@ import com.finzly.fxTrading.FxTrader.response.ErrorResponse;
 import com.finzly.fxTrading.FxTrader.tradingServiceImpl.TradingServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,11 @@ public class FxTradeController{
 	@GetMapping("/PrintTrade")
 	public Object printTrade(){
 		return service.printAll();
+	}
+	
+	@GetMapping("/Pagination/{offset}/{pageSize}")
+	public Object printTradeWithPagination(@PathVariable int offset,@PathVariable int pageSize){
+		return service.printAllWithPagination(offset, pageSize);
 	}
 
 	@PostMapping("/Exit")

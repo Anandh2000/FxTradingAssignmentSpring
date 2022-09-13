@@ -13,6 +13,8 @@ import com.finzly.fxTrading.FxTrader.response.SuccessResponse;
 import com.finzly.fxTrading.FxTrader.tradingService.TradingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,16 @@ public class TradingServiceImpl implements TradingService{
 			return new ResponseEntity<>(errorResponse, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<?> printAllWithPagination(int offset,int pageSize){
+		if(repository.findAll().isEmpty()) {
+			ErrorResponse errorResponse = errorHandlerService.emptySet("Empty set cannot be displayed", 400, null);
+			return new ResponseEntity<>(errorResponse, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(repository.findAll(PageRequest.of(offset, pageSize)), HttpStatus.OK);
 		}
 	}
 	
@@ -97,5 +109,6 @@ public class TradingServiceImpl implements TradingService{
 		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", null, 200);
 		return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
+
 
 }
