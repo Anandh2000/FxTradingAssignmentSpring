@@ -98,6 +98,4 @@ public class TradingServiceImpl implements TradingService{
 		return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
 
-	
-
 }

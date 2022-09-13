@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 public class User {
-	@Pattern(regexp = "[a-zA-Z\\s+]+[.]+",message = "Invalid User Name,correct formate is (Jhon H.)")
+	@Pattern(regexp = "[a-zA-Z\\s+]+[.]+",message = "Invalid User Name,correct formate is like (Jhon H.)")
 	private String customerName;
 	@Pattern(regexp = "USDINR|usdinr", message = "Invalid CurrencyPair")
 	@NotBlank
