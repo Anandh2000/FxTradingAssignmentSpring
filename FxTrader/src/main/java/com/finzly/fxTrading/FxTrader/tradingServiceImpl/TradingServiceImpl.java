@@ -53,16 +53,12 @@ public class TradingServiceImpl implements TradingService{
 				return new ResponseEntity<>(successResponse, HttpStatus.OK);
 							
 			}
-			else if(user.getGetRateYesOrNo().equalsIgnoreCase("no")) {
+			else {
 				recentlyEnteredData.add(new FxTradingData(++tradeNo, user.getCustomerName(), user.getCurrencyPair(), ConvertedAmount, rate));
 						
 				SuccessResponse successResponse = new SuccessResponse(
 						"Click the link and post BookorCancel:",entity , 200);
 				return new ResponseEntity<>(successResponse, HttpStatus.OK);
-			}
-			else {
-				ErrorResponse errorResponse = errorHandlerService.inValidEntry("Invalid Entry of rate", 400, "Enter yes or no");
-				return new ResponseEntity<>(errorResponse, HttpStatus.OK);
 			}
 				
 		}
@@ -93,7 +89,7 @@ public class TradingServiceImpl implements TradingService{
 	@Override
 	public ResponseEntity<?> setRate(double rate) {
 		TradingServiceImpl.rate = rate;
-		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", rate, 200);
+		SuccessResponse successResponse = new SuccessResponse("Succesfully rate changed", null, 200);
 		return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
 	
