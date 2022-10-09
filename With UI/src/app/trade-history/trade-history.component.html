@@ -1,0 +1,41 @@
+<div class="table-responsive">
+  <table class="table" >
+    <thead class="table-dark">
+        <tr>
+            <th >TradeNo</th>
+            <th >CurrencyPair</th>
+            <th >CustomerName</th>
+            <th >Amount</th>
+            <th >Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor ="let trade of trades | paginate:{
+            itemsPerPage: tableSize,
+            currentPage: page,
+            totalItems: count}; let i = index">
+            <td>{{trade.tradeNumber}}</td>
+            <td>{{trade.currencyPair}}</td>
+            <td>{{trade.customerName}}</td>
+            <td>{{trade.amount}}</td>
+            <td>{{trade.rate}}</td>
+          </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <div >
+      <select class="form-select mb-3" (change)="onTableSizeChange($event)" aria-label="Default select example">
+        <option selected>Table size</option>
+        <option *ngFor="let size of tableSizes"> {{size}}</option>
+      </select>
+    </div>
+    <div style="flex: 3;">
+      <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event)">
+
+    </pagination-controls>
+    </div>
+  </div>
+</div>
