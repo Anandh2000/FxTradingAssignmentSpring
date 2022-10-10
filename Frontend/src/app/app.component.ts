@@ -25,6 +25,8 @@ export class AppComponent {
       sidebar.classList.toggle("close");
       this.i=this.i+1
       console.log(this.i)
+      let popup:any = document.getElementById("RatePopup");
+      popup.classList.remove("open-popup");
   })
   
   modeSwitch.addEventListener("click", () =>{
