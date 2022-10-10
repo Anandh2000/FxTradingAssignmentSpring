@@ -1,0 +1,100 @@
+
+.container{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 300px;
+    left:100px;
+}
+
+.toggle{
+    margin-left: 20px;
+}
+
+.card{
+    margin-top: 60px;
+    border:none;
+    width: 400px;
+    padding: 40px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: var(--sidebar-color);
+    box-shadow: 0px 0px 6px var(--text-color);
+    color: var(--text-color);
+}
+
+.card h1,h6{
+    color: var(--text-color);
+}
+
+label{
+    color: var(--text-color);
+}
+
+
+.popup,
+.resultPopUp{
+    width:400px;
+    border-radius: 6px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    visibility: hidden;
+    transition: transform 0.3s, top 0.4s;
+    background: var(--sidebar-color);
+    box-shadow: 0px 0px 6px var(--text-color);
+    color: var(--text-color);
+}
+
+.text-danger{
+    font-style: italic;
+    font-size: smaller;
+}
+
+.open-popup,
+.open-resultPopUp{
+    visibility: visible;
+    top:50%;
+    transform: translate(-50%,-50%) scale(1);
+}
+
+img{
+    width: 230px;
+    box-shadow: 0 2px 5px rgba((0),0, 0, 0.2);
+}
+
+input.ng-invalid.ng-touched{
+    border: red 1px solid;
+} 
+
+.customerLabel{
+    display: flex;
+}
+.amountLabel{
+    display: flex;
+}
+
+.book{
+    background-color: var(--primary-color);
+    border-radius: 0%;
+    border:none;
+
+}
+.cancel{
+    background-color: var(--primary-color);
+    margin-left: 20px;
+    border-radius: 0%;
+    border: none;
+
+}
+
+
+
+
+
