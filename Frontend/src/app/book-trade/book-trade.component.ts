@@ -13,7 +13,7 @@ export class BookTradeComponent implements OnInit {
   form:any
   tradeConfirm:string=''
   submitted = false
-  isChecked=false
+  isChecked:any
   constructor(private formBuilder: FormBuilder,private http:HttpClient,private service:WebServiceService) { 
     this.bookTrade = this.formBuilder.group({
       customerName:['',Validators.pattern('^(?=.{1,28}$)(?![\\s])[a-zA-Z\\s+\\.]+')],
@@ -26,7 +26,7 @@ export class BookTradeComponent implements OnInit {
   get f(){return this.form.controls;}
 
   ngOnInit(): void {
-    
+    this.isChecked=false
   }
   toggle(){
     if(!this.isChecked){
@@ -40,8 +40,7 @@ export class BookTradeComponent implements OnInit {
     }
   }
   tradeBook(){
-   //if(confirm("are you sure"))
-   this.isChecked=false
+   console.log(this.bookTrade.value.getRateYesOrNo)
    this.submitted = true;
     this.service.bookTrades(this.bookTrade.value).subscribe(
       Response =>{
