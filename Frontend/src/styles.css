@@ -28,7 +28,6 @@ body.dark{
     --text-color: #ccc;
 }
 
-  
 body.dark .switch::before{
     left: 20px;
     

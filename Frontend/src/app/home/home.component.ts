@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class HomeComponent implements OnInit {
   public bookTrade !: FormGroup;
   isChecked = false;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private router:Router) { }
 
   ngOnInit(): void {
 
@@ -23,6 +25,12 @@ export class HomeComponent implements OnInit {
       console.log("no")
       this.isChecked=false
     }
+  }
+
+  onBack(){
+    if(confirm("Do you want to exit?")){
+      this.router.navigate([""]);
+    }   
   }
 
 }

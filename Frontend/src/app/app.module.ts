@@ -10,6 +10,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ErrorResponseComponent } from './error-response/error-response.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SideMenuBarComponent } from './side-menu-bar/side-menu-bar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BookTradeComponent,
     TradeHistoryComponent,
     WelcomeComponent,
-    ErrorResponseComponent
+    ErrorResponseComponent,
+    SideMenuBarComponent
   ],
   imports: [
     BrowserModule,

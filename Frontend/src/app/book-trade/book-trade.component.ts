@@ -32,6 +32,7 @@ export class BookTradeComponent implements OnInit {
     if(!this.isChecked){
     this.bookTrade.value.getRateYesOrNo='yes'
     this.isChecked=true;
+    console.log("ok")
     }
     else{
       this.bookTrade.value.getRateYesOrNo='no'
@@ -50,7 +51,7 @@ export class BookTradeComponent implements OnInit {
         this.message=Response.message
         console.log(Response)
         popup.classList.add("open-popup");
-        //this.bookTrade.reset();
+        this.bookTrade.reset();
       },
       error =>{
         console.log(error.message);

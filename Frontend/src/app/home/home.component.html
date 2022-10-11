@@ -1,3 +1,4 @@
+<app-side-menu-bar></app-side-menu-bar>
 <div class="container">
     <div class="card-group">
         <div class="card">
@@ -22,7 +23,7 @@
             <h5 class="card-title">Exit</h5>
             <p class="card-text">Have a nice day</p>
             <br><br>
-            <button  type="button" class="btn btn-primary" [routerLink]="['exit']" >Exit</button>
+            <button  type="button" (click)="onBack()" class="btn btn-primary" [routerLink]="['exit']" >Exit</button>
           </div>
         </div>
       </div>
